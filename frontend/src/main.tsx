@@ -8,6 +8,7 @@ import CardMemoryTest from "./pages/training/CardMemoryTest.tsx";
 import Practice from "./pages/training/Practice.tsx";
 import Settings from "./pages/training/Settings.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
+import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
         </Route>
         <Route path="/login" element={<LoginPage />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   </StrictMode>,
 );
