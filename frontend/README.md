@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Start
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Folder structure
+src/
+├── api/                  # Cấu hình axios instance, interceptors (cho Express backend)
+├── assets/               # Icons, logo, âm thanh game (mp3, wav)
+├── components/           # UI Reusable (Shadcn + Common)
+│   ├── ui/               # Button, Carousel, Dialog, Select (từ Shadcn)
+│   └── common/           # Navbar, Footer, Sidebar, LayoutWrapper
+├── constants/            # Các hằng số (Game config, Badge list, API Routes)
+├── features/             # TRÁI TIM CỦA APP - Chia theo nghiệp vụ
+│   ├── auth/             # Đăng nhập (Google, Password), Quản lý Profile
+│   ├── training/         # Games: Ghi nhớ số, Reaction, Card, Essay...
+│   │   ├── components/   # Timer.tsx, ControlButtons.tsx, DisplayPanel.tsx
+│   │   ├── hooks/        # useTimer.ts, useGameEngine.ts
+│   │   ├── services/     # api.post('/save-result')
+│   │   └── types/        # TrainingTypes.ts
+│   ├── memory-flip/      # Game lật thẻ (A*2 cards, config n x m)
+│   ├── card-training/    # Game ghi nhớ bài (X cards, time A)
+│   ├── dashboard/        # Tracking: Hoạt động, Lịch sử, Lửa đỏ/xanh (🔥/💚)
+│   ├── achievements/     # Hệ thống huy hiệu (Badge logic, 🏅)
+│   ├── ranking/          # Bảng xếp hạng, Hệ thống Combat
+│   └── ai-assistant/     # Chatbox AI, AI đánh giá bài báo (🤖)
+├── hooks/                # Global hooks (useAuth, useLocalStorage, useTheme)
+├── layouts/              # AuthLayout, GameLayout, DashboardLayout
+├── pages/                # Các file định nghĩa route (chỉ import feature tương ứng)
+│   ├── training/
+│   │   ├── NumberMemoryPage.tsx
+│   │   └── FlashcardPage.tsx
+│   ├── DashboardPage.tsx
+│   └── LoginPage.tsx
+├── store/                # Quản lý Global State (Zustand: userStore, gameStore)
+├── types/                # Global types (User, BaseResponse)
+└── utils/                # Helper: formatTime (cho Timer), calcPoints, rankCalculator
