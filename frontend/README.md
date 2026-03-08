@@ -1,16 +1,38 @@
-# React + Vite
+# Start
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```bash
+npm run dev
+```
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Folder structure
+src/
+├── api/                  # Cấu hình axios instance, interceptors (cho Express backend)
+├── assets/               # Icons, logo, âm thanh game (mp3, wav)
+├── components/           # UI Reusable (Shadcn + Common)
+│   ├── ui/               # Button, Carousel, Dialog, Select (từ Shadcn)
+│   └── common/           # Navbar, Footer, Sidebar, LayoutWrapper
+├── constants/            # Các hằng số (Game config, Badge list, API Routes)
+├── features/             # TRÁI TIM CỦA APP - Chia theo nghiệp vụ
+│   ├── auth/             # Đăng nhập (Google, Password), Quản lý Profile
+│   ├── training/         # Games: Ghi nhớ số, Reaction, Card, Essay...
+│   │   ├── components/   # Timer.tsx, ControlButtons.tsx, DisplayPanel.tsx
+│   │   ├── hooks/        # useTimer.ts, useGameEngine.ts
+│   │   ├── services/     # api.post('/save-result')
+│   │   └── types/        # TrainingTypes.ts
+│   ├── memory-flip/      # Game lật thẻ (A*2 cards, config n x m)
+│   ├── card-training/    # Game ghi nhớ bài (X cards, time A)
+│   ├── dashboard/        # Tracking: Hoạt động, Lịch sử, Lửa đỏ/xanh (🔥/💚)
+│   ├── achievements/     # Hệ thống huy hiệu (Badge logic, 🏅)
+│   ├── ranking/          # Bảng xếp hạng, Hệ thống Combat
+│   └── ai-assistant/     # Chatbox AI, AI đánh giá bài báo (🤖)
+├── hooks/                # Global hooks (useAuth, useLocalStorage, useTheme)
+├── layouts/              # AuthLayout, GameLayout, DashboardLayout
+├── pages/                # Các file định nghĩa route (chỉ import feature tương ứng)
+│   ├── training/
+│   │   ├── NumberMemoryPage.tsx
+│   │   └── FlashcardPage.tsx
+│   ├── DashboardPage.tsx
+│   └── LoginPage.tsx
+├── store/                # Quản lý Global State (Zustand: userStore, gameStore)
+├── types/                # Global types (User, BaseResponse)
+└── utils/                # Helper: formatTime (cho Timer), calcPoints, rankCalculator
