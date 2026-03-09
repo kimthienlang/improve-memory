@@ -9,6 +9,7 @@ import Practice from "./pages/training/Practice.tsx";
 import Settings from "./pages/training/Settings.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import { Toaster } from "sonner";
+import SignupPage from "./pages/SignupPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>

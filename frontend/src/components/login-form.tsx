@@ -32,7 +32,7 @@ export function LoginForm({
   const { performSocialLogin, isSocialLoading } = useSocialLogin();
 
   const onSubmit = async (data: LoginFormValues) => {
-    console.log("Dữ liệu sẵn sàng gửi đi: ", data);
+    console.log("Login-> Dữ liệu sẵn sàng gửi đi: ", data);
     login(data);
   };
 
@@ -119,7 +119,7 @@ export function LoginForm({
                   {isLoading || isSocialLoading ? "Processing..." : "Login"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="/register">Sign up</a>
+                  Don&apos;t have an account? <a href="/signup">Sign up</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
