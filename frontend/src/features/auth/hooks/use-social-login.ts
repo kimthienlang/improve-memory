@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { getSocialLoginUrl } from "../api";
+import { getSocialLoginUrl } from "../services";
 import { useState } from "react";
 
 export const useSocialLogin = () => {
