@@ -5,7 +5,7 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Mật khẩu không được để trống"),
 });
 
-export const signupSchema = z
+export const registerSchema = z
   .object({
     username: z
       .string()
@@ -15,7 +15,7 @@ export const signupSchema = z
 
     email: z.string().email("Định dạng Email không hợp lệ"),
 
-    password: z.string().min(8, "Mật khẩu phải từ 8 ký tự trở lên"),
+    password: z.string().min(3, "Mật khẩu phải từ 8 ký tự trở lên"),
     confirmPassword: z.string().min(1, "Phải nhập xác nhận mật khẩu"),
 
     name: z.string().min(2, "Tên không được để trống").max(50, "Tên quá dài"),
@@ -45,7 +45,7 @@ export const signupSchema = z
   });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
-export type SignupFormValues = z.infer<typeof signupSchema>;
+export type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export interface AuthResponse {
   token: string;

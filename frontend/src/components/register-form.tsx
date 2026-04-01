@@ -17,22 +17,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { DateOfBirth } from "@/features/auth/components/DateOfBirth";
 import { useForm, Controller } from "react-hook-form";
-import { signupSchema, type SignupFormValues } from "@/features/auth/types";
+import { registerSchema, type RegisterFormValues } from "@/features/auth/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { useSignup } from "@/features/auth/hooks/use-signup";
+import { useRegister } from "@/features/auth/hooks/use-register";
 
-export function SignupForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<SignupFormValues>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       username: "",
@@ -42,17 +42,17 @@ export function SignupForm({
     },
   });
 
-  const { signup, isLoading } = useSignup();
+  const { register, isLoading } = useRegister();
 
-  const handleSignup = async (data: SignupFormValues) => {
-    console.log("Signup-> Dữ liệu sẵn sàng gửi đi: ", data);
+  const handleRegister = async (data: RegisterFormValues) => {
+    console.log("Register-> Dữ liệu sẵn sàng gửi đi: ", data);
     // Giả lập gửi API
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    signup(data);
+    register(data);
   };
 
   const onError = (errors: any) => {
-    console.log("Signup Errors: ", errors);
+    console.log("Register Errors: ", errors);
     toast.error("Vui lòng kiểm tra lại thông tin đăng ký", {
       position: "top-right",
     });
@@ -68,7 +68,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(handleSignup, onError)}>
+          <form onSubmit={handleSubmit(handleRegister, onError)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -76,7 +76,7 @@ export function SignupForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  {...register("email")}
+                  {...formRegister("email")}
                 />
                 <FieldError errors={[errors.email]} />
               </Field>
@@ -86,7 +86,7 @@ export function SignupForm({
                   id="username"
                   type="text"
                   placeholder="johndoe"
-                  {...register("username")}
+                  {...formRegister("username")}
                 />
                 <FieldError errors={[errors.username]} />
               </Field>
@@ -96,7 +96,7 @@ export function SignupForm({
                   <Input
                     id="password"
                     type="password"
-                    {...register("password")}
+                    {...formRegister("password")}
                   />
                   <FieldError errors={[errors.password]} />
                 </Field>
@@ -107,7 +107,7 @@ export function SignupForm({
                   <Input
                     id="confirm-password"
                     type="password"
-                    {...register("confirmPassword")}
+                    {...formRegister("confirmPassword")}
                   />
                   <FieldError errors={[errors.confirmPassword]} />
                 </Field>
@@ -119,7 +119,7 @@ export function SignupForm({
                     id="name"
                     type="text"
                     placeholder="John Doe"
-                    {...register("name")}
+                    {...formRegister("name")}
                   />
                   <FieldError errors={[errors.name]} />
                 </Field>
