@@ -1,6 +1,8 @@
 import { Dumbbell, Settings, Spade, Timer } from "lucide-react";
 import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
+import { Button } from "./components/ui/button";
+import api from "./lib/api";
 
 const navigationData = [
   {
@@ -26,10 +28,17 @@ const navigationData = [
 ];
 
 function App() {
+
+  const handleClick = async () => {
+    const res = await api.get('/auth/test');
+    console.log('res: ', res)
+  }
+
   return (
     <>
       <div className="container flex h-full flex-col items-center justify-center gap-6">
         <Navbar navigationData={navigationData} />
+        <Button onClick={handleClick}>Test API</Button>
         <div className="container flex min-h-screen items-center justify-center">
           <Outlet />
         </div>
