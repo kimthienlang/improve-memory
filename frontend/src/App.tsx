@@ -6,8 +6,8 @@ import api from "./lib/api";
 
 const navigationData = [
   {
-    title: "Reaction speed test",
-    href: "/reaction-speed-test",
+    title: "Recall Dash",
+    href: "/recall-dash",
     icon: <Timer />,
   },
   {
