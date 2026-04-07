@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RecallDash from "./pages/training/RecallDash.tsx";
 import CardMemoryTest from "./pages/training/CardMemoryTest.tsx";
 import Practice from "./pages/training/Practice.tsx";
-import Settings from "./pages/training/Settings.tsx";
+import CollectionsPage from "./pages/training/Collections.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import { Toaster } from "sonner";
 import RegisterPage from "./pages/RegisterPage.tsx";
@@ -22,7 +22,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/recall-dash" element={<RecallDash />} />
             <Route path="/card-memory-test" element={<CardMemoryTest />} />
             <Route path="/practice" element={<Practice />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/collections" element={<CollectionsPage />} />
           </Route>
         </Route>
         <Route element={<GuestRoute />}>

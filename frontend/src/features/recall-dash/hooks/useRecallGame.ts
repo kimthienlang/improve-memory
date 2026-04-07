@@ -1,20 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { CollectionItem, GameSettings, GameState } from '../types';
-import { COLLECTIONS } from '../constants/collections';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 const TIMER_INTERVAL_MS = 10;
 
-function pickRandomItem(settings: GameSettings): CollectionItem | null {
-  const collection = COLLECTIONS[settings.collection] ?? [];
-  if (collection.length === 0) return null;
-  return collection[Math.floor(Math.random() * collection.length)];
-}
-
 function formatElapsed(ms: number): string {
   return (ms / 1000).toFixed(2);
 }
+
+const shuffleCards = (cards: CollectionItem[], quantity: number): CollectionItem[] => {
+  const newCards = [...cards];
+  for (let i = newCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newCards[i], newCards[j]] = [newCards[j], newCards[i]];
+  }
+  return newCards.slice(0, quantity);
+};
 
 // ── Initial State ─────────────────────────────────────────────────────────────
 
@@ -43,8 +45,9 @@ export interface UseRecallGameReturn {
  * Encapsulates all Recall Dash game logic.
  * Components remain pure UI — they only call these actions and read this state.
  */
-export function useRecallGame(settings: GameSettings): UseRecallGameReturn {
+export function useRecallGame(settings: GameSettings, activeCards: CollectionItem[]): UseRecallGameReturn {
   const [state, setState] = useState<GameState>(INITIAL_STATE);
+  const [shuffledCards, setShuffledCards] = useState<CollectionItem[]>([]);
 
   // ── Timer ──────────────────────────────────────────────────────────────────
 
@@ -72,27 +75,31 @@ export function useRecallGame(settings: GameSettings): UseRecallGameReturn {
   // ── Actions ────────────────────────────────────────────────────────────────
 
   const start = useCallback(() => {
+    if (activeCards.length === 0) return;
+    const shuffled = shuffleCards(activeCards, settings.quantity);
+    setShuffledCards(shuffled);
+
     setState({
       status: 'playing',
-      currentItem: pickRandomItem(settings),
+      currentItem: shuffled[0] || null,
       itemCount: 0,
       elapsedMs: 0,
     });
-  }, [settings]);
+  }, [settings.quantity, activeCards]);
 
   const next = useCallback(() => {
     setState((prev) => {
-      const isLastItem = prev.itemCount + 1 >= settings.quantity;
+      const isLastItem = prev.itemCount + 1 >= Math.min(settings.quantity, shuffledCards.length);
       if (isLastItem) return { ...INITIAL_STATE }; // session complete → restart
 
       return {
         ...prev,
-        currentItem: pickRandomItem(settings),
+        currentItem: shuffledCards[prev.itemCount + 1],
         itemCount: prev.itemCount + 1,
         elapsedMs: 0,
       };
     });
-  }, [settings]);
+  }, [settings.quantity, shuffledCards]);
 
   const stop = useCallback(() => {
     setState((prev) => ({ ...prev, status: 'paused' }));
@@ -109,7 +116,7 @@ export function useRecallGame(settings: GameSettings): UseRecallGameReturn {
   // ── Derived Values ────────────────────────────────────────────────────────
 
   const formattedTime = formatElapsed(state.elapsedMs);
-  const isLastItem = state.itemCount + 1 >= settings.quantity;
+  const isLastItem = state.itemCount + 1 >= Math.min(settings.quantity, shuffledCards.length);
 
   return { state, formattedTime, isLastItem, start, next, stop, resume, restart };
 }

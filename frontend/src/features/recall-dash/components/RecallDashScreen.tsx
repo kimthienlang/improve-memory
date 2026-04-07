@@ -48,9 +48,11 @@ function ControlBar({ isIdle, isPaused, onRestart, onStop, onResume }: ControlBa
 
 export function RecallDashScreen({ onStatusChange }: RecallDashScreenProps) {
     const settings = useRecallDashStore((state) => state.settings);
+    const activeCards = useRecallDashStore((state) => state.activeCards);
+    const isLoading = useRecallDashStore((state) => state.isLoading);
 
     const { state, formattedTime, isLastItem, start, next, stop, resume, restart } =
-        useRecallGame(settings);
+        useRecallGame(settings, activeCards);
 
     const { status, currentItem, itemCount } = state;
     const isIdle = status === 'idle';
@@ -97,7 +99,9 @@ export function RecallDashScreen({ onStatusChange }: RecallDashScreenProps) {
                     </div>
 
                     <div className="text-4xl font-bold p-12 bg-secondary rounded-2xl shadow-inner min-w-[200px] flex items-center justify-center min-h-[144px]">
-                        {isIdle ? (
+                        {isLoading ? (
+                            <span className="text-muted-foreground opacity-50 text-base animate-pulse">Loading...</span>
+                        ) : isIdle ? (
                             <span className="text-muted-foreground opacity-50">?</span>
                         ) : (
                             displayText
@@ -114,8 +118,8 @@ export function RecallDashScreen({ onStatusChange }: RecallDashScreenProps) {
 
             <CardFooter className="pt-4 border-t">
                 {isIdle ? (
-                    <Button className="w-full text-lg h-12" onClick={handleStart}>
-                        Start
+                    <Button className="w-full text-lg h-12" disabled={isLoading || activeCards.length === 0} onClick={handleStart}>
+                        {activeCards.length === 0 && !isLoading ? 'No Cards Available' : 'Start'}
                     </Button>
                 ) : (
                     <Button className="w-full text-lg h-12" disabled={isPaused} onClick={handleNext}>

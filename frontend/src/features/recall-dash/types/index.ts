@@ -1,20 +1,24 @@
 // ── Domain Types ────────────────────────────────────────────────────────────
 
 export interface CollectionItem {
-  /** The prompt shown to the player (e.g. "1") */
+  _id?: string;
+  collectionId?: string;
   front: string;
-  /** The answer / back-side (e.g. "Con Kiến") */
   back: string;
+  orderIndex?: number;
 }
 
-export type CollectionName = 'Numbers' | 'Letters' | 'Words' | 'Shapes';
+export interface Collection {
+  _id: string;
+  title: string;
+}
 
 export type GameStatus = 'idle' | 'playing' | 'paused';
 
 // ── Game Configuration ───────────────────────────────────────────────────────
 
 export interface GameSettings {
-  collection: CollectionName;
+  collectionId: string;
   /** Total items to show per session */
   quantity: number;
   /** Seconds per item. null = unlimited */

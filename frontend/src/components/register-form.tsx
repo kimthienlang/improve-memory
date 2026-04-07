@@ -78,7 +78,7 @@ export function RegisterForm({
                   placeholder="m@example.com"
                   {...formRegister("email")}
                 />
-                <FieldError errors={[errors.email]} />
+                <FieldError className="text-xs" errors={[errors.email]} />
               </Field>
               <Field>
                 <FieldLabel htmlFor="username">Username</FieldLabel>
@@ -88,7 +88,7 @@ export function RegisterForm({
                   placeholder="johndoe"
                   {...formRegister("username")}
                 />
-                <FieldError errors={[errors.username]} />
+                <FieldError className="text-xs" errors={[errors.username]} />
               </Field>
               <Field className="grid grid-cols-2 gap-4">
                 <Field>
@@ -98,7 +98,7 @@ export function RegisterForm({
                     type="password"
                     {...formRegister("password")}
                   />
-                  <FieldError errors={[errors.password]} />
+                  <FieldError className="text-xs" errors={[errors.password]} />
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="confirm-password">
@@ -109,7 +109,7 @@ export function RegisterForm({
                     type="password"
                     {...formRegister("confirmPassword")}
                   />
-                  <FieldError errors={[errors.confirmPassword]} />
+                  <FieldError className="text-xs" errors={[errors.confirmPassword]} />
                 </Field>
               </Field>
               <Field className="grid grid-cols-2 gap-4">
@@ -121,7 +121,7 @@ export function RegisterForm({
                     placeholder="John Doe"
                     {...formRegister("name")}
                   />
-                  <FieldError errors={[errors.name]} />
+                  <FieldError className="text-xs" errors={[errors.name]} />
                 </Field>
                 <Field>
                   <Controller

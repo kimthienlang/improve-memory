@@ -4,8 +4,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import type { CollectionName } from '../types';
-import { COLLECTION_NAMES } from '../constants/collections';
 import { useRecallDashStore } from '@/store/recallDashStore';
 
 // ── Props ─────────────────────────────────────────────────────────────────────
@@ -18,12 +16,13 @@ interface RecallDashOptionProps {
 
 export function RecallDashOption({ disabled }: RecallDashOptionProps) {
   const settings = useRecallDashStore((state) => state.settings);
+  const collections = useRecallDashStore((state) => state.collections);
   const updateSetting = useRecallDashStore((state) => state.updateSetting);
 
   // ── Handlers ────────────────────────────────────────────────────────────────
 
   const handleCollection = (value: string) =>
-    updateSetting('collection', value as CollectionName);
+    updateSetting('collectionId', value);
 
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) =>
     updateSetting('quantity', parseInt(e.target.value) || 0);
@@ -39,14 +38,14 @@ export function RecallDashOption({ disabled }: RecallDashOptionProps) {
       <CardContent className="space-y-4 pt-4">
         <div className="space-y-2">
           <Label className={cn(disabled && "text-muted-foreground opacity-50")}>Collection</Label>
-          <Select value={settings.collection} onValueChange={handleCollection} disabled={disabled}>
+          <Select value={settings.collectionId} onValueChange={handleCollection} disabled={disabled || collections.length === 0}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select collection" />
+              <SelectValue placeholder={collections.length === 0 ? "No collections found" : "Select collection"} />
             </SelectTrigger>
             <SelectContent>
-              {COLLECTION_NAMES.map((name) => (
-                <SelectItem key={name} value={name}>
-                  {name}
+              {collections.map((c) => (
+                <SelectItem key={c._id} value={c._id}>
+                  {c.title}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -61,6 +60,7 @@ export function RecallDashOption({ disabled }: RecallDashOptionProps) {
             onChange={handleQuantity}
             placeholder="Number of items"
             disabled={disabled}
+            min={1}
           />
         </div>
 
@@ -72,6 +72,7 @@ export function RecallDashOption({ disabled }: RecallDashOptionProps) {
             onChange={handleTimeLimit}
             placeholder="Unlimited"
             disabled={disabled}
+            min={1}
           />
         </div>
 
