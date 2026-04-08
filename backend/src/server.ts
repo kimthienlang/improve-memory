@@ -6,6 +6,7 @@ import connectDB from './configs/db';
 import { errorMiddleware } from './middlewares/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
+import collectionRoutes from './routes/collectionRoutes';
 import cookieParser from 'cookie-parser';
 
 // Load environmental variables FIRST (before anything that needs them)
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/collections', collectionRoutes);
 
 
 // Global Error Handler (HAVE TO BE AT THE END)

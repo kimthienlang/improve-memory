@@ -1,13 +1,11 @@
-import { Dumbbell, Settings, Spade, Timer } from "lucide-react";
+import { Dumbbell, Library, Spade, Timer } from "lucide-react";
 import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
-import { Button } from "./components/ui/button";
-import api from "./lib/api";
 
 const navigationData = [
   {
-    title: "Reaction speed test",
-    href: "/reaction-speed-test",
+    title: "Recall Dash",
+    href: "/recall-dash",
     icon: <Timer />,
   },
   {
@@ -21,25 +19,21 @@ const navigationData = [
     icon: <Dumbbell />,
   },
   {
-    title: "Settings",
-    href: "/settings",
-    icon: <Settings />,
+    title: "Collections",
+    href: "/collections",
+    icon: <Library />,
   },
 ];
 
 function App() {
 
-  const handleClick = async () => {
-    const res = await api.get('/auth/test');
-    console.log('res: ', res)
-  }
 
   return (
     <>
-      <div className="container flex h-full flex-col items-center justify-center gap-6">
+      <div className="container flex h-full flex-col items-center justify-center">
         <Navbar navigationData={navigationData} />
-        <Button onClick={handleClick}>Test API</Button>
-        <div className="container flex min-h-screen items-center justify-center">
+
+        <div className="container flex h-full items-center justify-center py-24">
           <Outlet />
         </div>
       </div>

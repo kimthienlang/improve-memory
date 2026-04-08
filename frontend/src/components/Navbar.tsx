@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import Logo from "@/components/shadcn-studio/logo";
 
 type NavigationItem = {
   title: string;
@@ -38,10 +37,17 @@ const Navbar = ({ navigationData }: { navigationData: NavigationItem }) => {
     }
   };
 
+  const handleClick = async () => {
+    const res = await api.get('/auth/test');
+    console.log('res: ', res)
+  }
+
   return (
     <header className="sticky top-2 z-50 w-[98%] rounded-sm bg-background/90 p-1 shadow-sm md:w-fit mx-auto border border-border/40 backdrop-blur-sm">
       <div className="flex w-full items-center justify-between gap-4 px-2">
         <div className="flex flex-1 items-center gap-4 font-medium text-muted-foreground md:justify-center lg:gap-2">
+
+          <Button onClick={handleClick}>Test API</Button>
           {navigationData.map((item) => (
             <a
               key={item.title}
